@@ -1,28 +1,71 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from 'react';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+import {
+    Tour,
+    TourProvider,
+    ModalStep
+} from 'react-ui-tour';
+
+class App extends React.Component {
+    state = {
+        showed: [],
+    };
+
+    render() {
+        return (
+            <div>
+                <TourProvider
+                    predicate={id => {
+                        console.log(`predicate - ${id}`);
+                        if (id === 'id2') {
+                            this.setState(({ showed }) => {
+                                return {
+                                    showed: [...showed, 'id2'],
+                                }
+                            });
+                            return true;
+                        }
+                        if (id === 'id1' && this.state.showed.indexOf('id2') > -1) {
+                            this.setState(({ showed }) => {
+                                return {
+                                    showed: [...showed, 'id1'],
+                            }
+                            });
+                            return true;
+                        }
+                        return false;
+                    }}
+                    onTourShown={id => console.log(`shown tour ${id}`)}
+                >
+                    <div>
+                        <Tour id="id1">
+                            <ModalStep
+                                header="Первый тур"
+                                content="Первый шаг"
+                            />
+                            <ModalStep
+                                header="Первый тур"
+                                content="Второй шаг"
+                            />
+                        </Tour>
+
+                        <Tour
+                            id="id2"
+                        >
+                            <ModalStep
+                                header="Второй тур"
+                                content="Первый шаг"
+                            />
+                            <ModalStep
+                                header="Второй тур"
+                                content="Второй шаг"
+                            />
+                        </Tour>
+                    </div>
+                </TourProvider>
+            </div>
+        );
+    }
 }
 
 export default App;

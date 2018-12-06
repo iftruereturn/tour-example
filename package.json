@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@skbkontur/react-ui": "^0.31.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-scripts": "2.1.1"
+    "react-scripts": "2.1.1",
+    "react-ui-tour": "^0.9.3"
   },
   "scripts": {
     "start": "react-scripts start",
